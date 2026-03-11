@@ -11,24 +11,24 @@ export class EbricksDownloader {
   ) {}
 
   async downloads(seq: number) {
-    const topics: EbricksTopic[] = [];
+    const total: EbricksTopic[] = [];
 
     for (let i = 0; ; i++) {
       const topics = await this.client.getTopics({ seq, unit: i });
-      if (!topics) {
+      if (!topics.length) {
         break;
       }
-      topics.forEach((topic) => topics.push(topic));
+      topics.forEach((topic) => total.push(topic));
     }
 
     if (!fs.existsSync(this.outputDir)) {
       fs.mkdirSync(this.outputDir, { recursive: true });
     }
 
-    console.info(`Found ${topics.length} topics`);
+    console.info(`Found ${total.length} topics`);
 
     return Promise.all(
-      topics.map(async (topic) => {
+      total.map(async (topic) => {
         const filePath = `${this.outputDir}/${topic.file_name}`;
 
         const writer = fs.createWriteStream(filePath);
