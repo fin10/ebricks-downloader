@@ -6,6 +6,15 @@ function getRequiredString(key: string): string {
   return value;
 }
 
+function getBoolean(key: string): boolean {
+  const value = process.env[key];
+  if (!value) {
+    return false;
+  }
+  return value === "true";
+}
+
 export const config = {
   getRequiredString,
+  getBoolean,
 };
