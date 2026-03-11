@@ -35,20 +35,20 @@ export class EbricksClient {
     seq,
     unit,
   }: Readonly<{ seq: number; unit: number }>): Promise<EbricksTopic[]> {
+    const params = new URLSearchParams({
+      seq: String(seq),
+      unit_no: String(unit),
+    });
+
     const started = moment();
 
-    const res = await this.axiosInstance.get<
+    const res = await this.axiosInstance.post<
       EbricksTopicsResponse | EbricksTopicsNoResponse
-    >("/qr/JsonTopicFileList", {
-      params: {
-        seq,
-        unit_no: unit,
-      },
-    });
+    >("/qr/JsonTopicFileList", params);
 
     const topics = Array.isArray(res.data.topics) ? res.data.topics : [];
 
-    console.info(`Got ${topics} topics in ${moment().diff(started)} ms`);
+    console.info(`Got ${topics.length} topics in ${moment().diff(started)} ms`);
 
     return topics;
   }
