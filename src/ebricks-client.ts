@@ -48,7 +48,9 @@ export class EbricksClient {
 
     const topics = Array.isArray(res.data.topics) ? res.data.topics : [];
 
-    console.info(`Got ${topics.length} topics in ${moment().diff(started)} ms`);
+    console.info(
+      `[${unit}] Got ${topics.length} topics in ${moment().diff(started)} ms`,
+    );
 
     return topics;
   }

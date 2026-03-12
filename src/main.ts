@@ -1,16 +1,21 @@
 import { program } from "commander";
 import { EbricksDownloader } from "./ebricks-downloader.js";
 
-program.argument("<number>");
+program.argument("<number>", "Book ID");
 
 program.parse();
 
 const [seq] = program.args;
 
-const downloader = new EbricksDownloader();
+try {
+  const downloader = new EbricksDownloader();
 
-downloader
-  .downloads(Number(seq))
-  .catch((err) =>
-    console.error(`Failed to downloads with seq=${seq}\n${err.stack}`),
-  );
+  await downloader.downloads(Number(seq));
+
+  console.info(`Completed downloads with id=${seq}`);
+} catch (err) {
+  const error =
+    err instanceof Error ? err : new Error("Unknown error", { cause: err });
+  console.error(`Failed to downloads with seq=${seq}\n${error.stack}`);
+  process.exit(1);
+}

@@ -11,6 +11,8 @@ export class EbricksDownloader {
   ) {}
 
   async downloads(seq: number) {
+    console.info(`Starting downloads with id=${seq}...`);
+
     const total: EbricksTopic[] = [];
 
     for (let i = 0; ; i++) {
