@@ -1,7 +1,6 @@
 {
   "name": "ebricks-downloader",
   "private": true,
-  "description": "",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/fin10/ebricks-downloader.git"
@@ -10,6 +9,7 @@
   "author": "Changyong Jeon",
   "type": "module",
   "scripts": {
+    "test": "vitest",
     "download": "dotenvx run -- node --loader ts-node/esm ./src/main.ts"
   },
   "devDependencies": {
